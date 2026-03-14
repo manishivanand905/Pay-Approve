@@ -99,10 +99,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
   if (user.role === 'admin' && user.isActive) {
     const count = await User.countDocuments({ role: 'admin', isActive: true });
-    if (count <= 1) {
-      res.status(400);
-      throw new Error('At least one active admin must remain');
-    }
+    if (count <= 1) { res.status(400); throw new Error('At least one active admin must remain'); }
   }
   user.isActive = false;
   await user.save();

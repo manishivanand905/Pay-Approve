@@ -32,17 +32,15 @@ const isAllowedOrigin = (origin) => {
   return false;
 };
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (isAllowedOrigin(origin)) return callback(null, true);
-      const err = new Error(`CORS blocked for origin: ${origin}`);
-      err.statusCode = 403;
-      return callback(err);
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin(origin, callback) {
+    if (isAllowedOrigin(origin)) return callback(null, true);
+    const err = new Error(`CORS blocked for origin: ${origin}`);
+    err.statusCode = 403;
+    return callback(err);
+  },
+  credentials: true,
+}));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
